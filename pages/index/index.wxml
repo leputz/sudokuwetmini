@@ -1,0 +1,16 @@
+<!-- pages/index/index.wxml -->
+<view class="container" style="padding: 20px;">
+  <text style="font-size: 20px; font-weight: bold;">数独 ONNX 测试</text>
+  
+  <view style="margin-top: 20px; margin-bottom: 20px;">
+    <text>状态: {{isModelReady ? '✅ 模型已加载' : '⏳ 正在加载模型...'}}</text>
+  </view>
+
+  <button type="primary" bindtap="testInference" disabled="{{!isModelReady}}">
+    运行测试推理
+  </button>
+
+  <view style="margin-top: 30px; padding: 15px; background-color: #f0f0f0; border-radius: 8px;">
+    <text>{{resultText}}</text>
+  </view>
+</view>
