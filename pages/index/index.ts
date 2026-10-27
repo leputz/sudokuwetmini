@@ -6,27 +6,27 @@ Page({
 
   testFindOnnx() {
     const fs = wx.getFileSystemManager();
-    const path = 'data/digitnet_sim.png'; // 代码包里的伪装文件
-    const localPath = `${wx.env.USER_DATA_PATH}/digitnet.onnx`; // 本地的真实模型
+    const path = 'data/digitnet_sim.png'; // Placeholder file bundled with the package
+    const localPath = `${wx.env.USER_DATA_PATH}/digitnet.onnx`; // Actual model stored locally
     
     try {
       fs.accessSync(path);
-      console.log("✅ 成功找到 ONNX 文件！路径:", path);
+      console.log("✅ ONNX file found! Path:", path);
       
-      // 强制复制（覆盖旧的，确保一定是最新的模型）
+      // Force a copy (overwrite the old file to ensure the model is up to date)
       fs.copyFileSync(path, localPath);
-      console.log("✅ 复制到本地成功:", localPath);
+      console.log("✅ Successfully copied to local storage:", localPath);
       
-      // 复制成功后，立刻调用创建 Session 的方法
+      // After copying successfully, immediately call the method to create a session
       this.createSession(localPath);
       
     } catch (e) {
-      console.error("❌ 找不到文件或复制失败:", e);
+      console.error("❌ File not found or copy failed:", e);
     }
   },
 
   createSession(modelPath: string) {
-    console.log("开始加载模型...");
+    console.log("Loading model...");
     const session = (wx as any).createInferenceSession({
       model: modelPath,
       precisionLevel: 4,
@@ -38,28 +38,28 @@ Page({
     });
   
     session.onLoad(() => {
-      console.log('🎉 ONNX 模型加载成功！可以开始推理了。');
+      console.log('🎉 ONNX model loaded successfully! Ready to run inference.');
       
       const fakeInputData = new Float32Array(784).fill(0);
       
-      // ⚠️ 关键：必须包含 type 字段，且值必须是 'float32'
+      // ⚠️ Important: Must include the type field, and its value must be 'float32'
       const inputTensor = {
-        type: 'float32',            // 必须声明数据类型
-        data: fakeInputData.buffer, // 必须是 ArrayBuffer
-        shape: [1, 1, 28, 28]       // NCHW 顺序
+        type: 'float32',            // The data type must be declared
+        data: fakeInputData.buffer, // Must be an ArrayBuffer
+        shape: [1, 1, 28, 28]       // NCHW order
       };
   
-      console.log("开始执行推理...");
+      console.log("Running inference...");
       
-      // ⚠️ 键名 'input' 必须与模型输入节点名完全一致
+      // ⚠️ The key 'input' must exactly match the model's input node name
       session.run({
         input: inputTensor 
       }).then((outputs: any) => {
-        console.log("✅ 推理成功！完整返回对象:", outputs);
+        console.log("✅ Inference succeeded! Full output object:", outputs);
         
-        // 你的模型输出节点名为 'logits'
+        // The model's output node is named 'logits'
         const outputData = outputs.logits.data;
-        console.log("📊 预测分数:", outputData);
+        console.log("📊 Prediction scores:", outputData);
         
         let maxIndex = 0;
         let maxValue = -Infinity;
@@ -70,16 +70,16 @@ Page({
           }
         }
         
-        console.log(`🏆 预测结果: ${maxIndex}`);
-        wx.showToast({ title: `预测: ${maxIndex}`, icon: 'none' });
+        console.log(`🏆 Prediction: ${maxIndex}`);
+        wx.showToast({ title: `Prediction: ${maxIndex}`, icon: 'none' });
         
       }).catch((err: any) => {
-        console.error("❌ 推理失败:", err);
+        console.error("❌ Inference failed:", err);
       });
     });
   
     session.onError((error: any) => {
-      console.error('❌ 模型加载失败:', error);
+      console.error('❌ Model loading failed:', error);
     });
   }
 });

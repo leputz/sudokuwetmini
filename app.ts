@@ -2,16 +2,16 @@
 App<IAppOption>({
   globalData: {},
   onLaunch() {
-    // 展示本地存储能力
+    // Demonstrate local storage capabilities
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
+    // Log in
     wx.login({
       success: res => {
         console.log(res.code)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        // Send res.code to the backend to obtain openId, sessionKey, and unionId
       },
     })
   },
