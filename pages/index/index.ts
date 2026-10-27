@@ -46,10 +46,10 @@ Page({
       const fakeInputData = new Float32Array(28 * 28).fill(0);
       
       const inputTensor = {
-        // ⚠️ 注意：如果你的 ONNX 模型输入名不是 "input"（比如是 "x" 或者 "input.1"），这里会报错，需要用 Netron 查看后修改
-        name: 'input', 
+        name: 'input',
         shape: [1, 1, 28, 28],
-        data: fakeInputData.buffer, // 微信官方要求传 ArrayBuffer
+        data: fakeInputData.buffer,
+        type: 'float32', // ⚠️ 必须添加类型声明
       };
 
       console.log("开始执行推理...");
