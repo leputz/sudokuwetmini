@@ -1,16 +1,16 @@
-<!-- pages/index/index.wxml -->
 <view class="container" style="padding: 20px;">
-  <text style="font-size: 20px; font-weight: bold;">Sudoku ONNX Test</text>
-  
-  <view style="margin-top: 20px; margin-bottom: 20px;">
-    <text>Status: {{isModelReady ? '✅ Model loaded' : '⏳ Loading model...'}}</text>
+  <view style="margin-bottom: 20px;">
+    <text>模型状态: {{isModelReady ? '✅ 已就绪' : '⏳ 加载中...'}}</text>
   </view>
 
-  <button type="primary" bindtap="testInference" disabled="{{!isModelReady}}">
-    Run Test Inference
+  <button type="primary" bindtap="chooseImage" disabled="{{!isModelReady}}">
+    拍照 / 从相册选择
   </button>
-
-  <view style="margin-top: 30px; padding: 15px; background-color: #f0f0f0; border-radius: 8px;">
-    <text>{{resultText}}</text>
+  
+  <view wx:if="{{imagePath}}" style="margin-top: 20px; text-align: center;">
+    <text>已选择图片：</text>
+    <image src="{{imagePath}}" mode="widthFix" style="width: 100%; margin-top: 10px; border: 1px solid #ccc;"></image>
   </view>
+  <!-- 隐藏的 Canvas 用于处理图片 -->
+  <canvas type="2d" id="imageCanvas" style="width: 256px; height: 256px; position: absolute; top: -9999px;"></canvas>
 </view>
