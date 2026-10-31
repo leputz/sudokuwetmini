@@ -7,15 +7,15 @@ This project demonstrates:
 
 **Figure 1:** When you open the Mini Program, if everything is working properly, it should display "AI Model: ✅ Ready".
 
-<img src="./data/Fig1.jpg" alt="Figure 1" width="500">
+<img src="./data/Fig1.jpg" alt="Figure 1" width="300">
 
 **Figure 2:** Click the green "Take Photo / Select Sudoku Image" button, then select a photo of the Sudoku puzzle (black digits on a white background).
 
-<img src="./data/Fig2.jpg" alt="Figure 2" width="500">
+<img src="./data/Fig2.jpg" alt="Figure 2" width="300">
 
 **Figure 3:** If the Sudoku puzzle is solvable, the solved result image will be displayed.
 
-<img src="./data/Fig3.jpg" alt="Figure 3" width="500">
+<img src="./data/Fig3.jpg" alt="Figure 3" width="300">
 
 
 ## How it Works
