@@ -44,6 +44,8 @@
       🐞 调试：切分后的 81 个格子 (用于检查预处理)
     </view>
     <image src="{{debugImageBase64}}" mode="widthFix" style="width: 100%; border: 1px solid #ccc;"></image>
+    <button type="primary" bindtap="saveDebugImage" style="margin-top: 15px; font-size: 14px;">保存调试图到相册</button>
+    <button type="default" bindtap="previewDebugImage" style="margin-top: 10px; font-size: 14px;">预览并长按保存</button>
   </view>
   
   <!-- 隐藏的 Canvas，必须在 DOM 中才能工作，用 opacity 和 z-index 隐藏更稳妥 -->

@@ -14,6 +14,9 @@
   "permission": {
     "scope.camera": {
       "desc": "需要使用您的摄像头来拍摄数独题目"
+    },
+    "scope.writePhotosAlbum": {
+      "desc": "需要保存识别结果到您的相册"
     }
   }
 }
