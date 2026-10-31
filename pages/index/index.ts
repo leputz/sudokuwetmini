@@ -302,7 +302,8 @@ Page({
           if (outputData[i] > maxValue) { maxValue = outputData[i]; maxIndex = i; }
         }
         
-        resolve(maxValue < 0.65 && maxIndex !== 0 ? 0 : maxIndex);
+        //resolve(maxValue < 0.65 && maxIndex !== 0 ? 0 : maxIndex);
+        resolve(maxValue < 0.50 && maxIndex !== 0 ? 0 : maxIndex);
       }).catch((err) => {
         console.error("推理失败", err);
         resolve(0);
