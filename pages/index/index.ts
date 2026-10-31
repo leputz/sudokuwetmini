@@ -180,6 +180,10 @@ Page({
             wx.hideLoading();
             printBoard(board, "Recognized Board");
             this.setData({ recognizedBoard: board });
+
+            // ⚠️ 加入这一步：基于数独规则纠正漏识别的数字
+            this.sudokuPostProcess(board);
+            printBoard(board, "Post-processed Board"); // 看看纠错后的结果
   
             // 求解逻辑
             const solved = JSON.parse(JSON.stringify(board));
@@ -356,5 +360,42 @@ Page({
     wx.previewImage({
       urls: [this.data.debugImageBase64]
     });
-  }
+  },
+
+    // 基于数独规则进行后处理纠错
+  sudokuPostProcess(board: number[][]) {
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          // 如果当前是空白格 (0)，尝试利用数独规则填补它
+          if (board[r][c] === 0) {
+            const possible = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            // 1. 排除同行、同列已有的数字
+            for (let i = 0; i < 9; i++) {
+              if (board[r][i] !== 0) possible[board[r][i] - 1] = 0;
+              if (board[i][c] !== 0) possible[board[i][c] - 1] = 0;
+            }
+            // 2. 排除同宫已有的数字
+            const br = Math.floor(r / 3) * 3;
+            const bc = Math.floor(c / 3) * 3;
+            for (let i = br; i < br + 3; i++) {
+              for (let j = bc; j < bc + 3; j++) {
+                if (board[i][j] !== 0) possible[board[i][j] - 1] = 0;
+              }
+            }
+
+            // 3. 如果过滤完后，只剩下唯一一个可能的数字，说明模型大概率漏识了，强制填上
+            const validNumbers = possible.filter(v => v !== 0);
+            if (validNumbers.length === 1) {
+              board[r][c] = validNumbers[0];
+              changed = true;
+              console.log(`🔧 自动纠错：行 ${r}, 列 ${c} 漏识别，自动填入 ${validNumbers[0]}`);
+            }
+          }
+        }
+      }
+    }
+  },
 });
