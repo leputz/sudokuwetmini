@@ -82,7 +82,7 @@ Page({
 
     wx.createSelectorQuery()
       .select('#sudokuCanvas')
-      .fields({ node: true, size: true })
+      .fields({ node: true, size: true })               
       .select('#debugCanvas')
       .fields({ node: true, size: true })
       .exec(async (res) => {
@@ -139,7 +139,7 @@ Page({
           debugCtx.fillStyle = '#888888';
           debugCtx.fillRect(0, 0, debugCanvas.width, debugCanvas.height);
 
-          const tempCanvas = wx.createOffscreenCanvas({type: '2d', width: 28, height: 28});
+          const tempCanvas =  (wx as any).createOffscreenCanvas({type: '2d', width: 28, height: 28});
           const tempCtx = tempCanvas.getContext('2d');
 
           for (let r = 0; r < 9; r++) {
@@ -308,7 +308,7 @@ Page({
         
         //resolve(maxValue < 0.65 && maxIndex !== 0 ? 0 : maxIndex);
         resolve(maxValue < 0.50 && maxIndex !== 0 ? 0 : maxIndex);
-      }).catch((err) => {
+      }).catch((err: any) => {
         console.error("Inference failed", err);
         resolve(0);
       });
