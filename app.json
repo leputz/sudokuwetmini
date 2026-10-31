@@ -13,10 +13,10 @@
   "lazyCodeLoading": "requiredComponents",
   "permission": {
     "scope.camera": {
-      "desc": "需要使用您的摄像头来拍摄数独题目"
+      "desc": "Camera access is required to capture Sudoku puzzles."
     },
     "scope.writePhotosAlbum": {
-      "desc": "需要保存识别结果到您的相册"
+      "desc": "Photo album access is required to save the recognition results."
     }
   }
 }
